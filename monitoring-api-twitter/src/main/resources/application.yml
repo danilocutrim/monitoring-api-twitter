@@ -1,0 +1,46 @@
+server:
+  port: ${ENV_PORT:9081}
+  servlet:
+    context-path: ${ENV_CTX_PATH:/twitter-api}
+spring:
+  profiles:
+    active: dev
+  config:
+    use-legacy-processing: true
+  data:
+    mongodb:
+      uri: ${ENV_MONGO_URI:mongodb://admin:admin@127.0.0.1/monitoring?authSource=admin}
+      auto-index-creation: true
+  application:
+    name: monitoring-api-twitter
+  sleuth:
+    enabled: ${ENV_SLEUTH_ENABLE:true}
+  zipkin:
+    enabled: false
+logstash:
+  host: localhost
+  port: 5000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoint:
+    metrics:
+      enabled: false
+    prometheus:
+      enabled: true
+
+http:
+  timeout: ${ENV_HTTP_TIMEOUT:10}
+  debug: ${ENV_HTTP_DEBUG:true}
+
+twitter:
+  host: https://api.twitter.com
+  api:
+    token: AAAAAAAAAAAAAAAAAAAAALqFUQEAAAAANeXpeCduwrygAqzi7Zumbm1azcY%3DHwRLRaMti1wv7XZKbr0OKMAusiaWMf5QMJinZxH8wsbJmmy7hw

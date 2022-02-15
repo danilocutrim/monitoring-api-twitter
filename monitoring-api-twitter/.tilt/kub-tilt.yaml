@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitoring-api-twitter
+  labels:
+    app: monitoring-api-twitter
+spec:
+  selector:
+    matchLabels:
+      app: monitoring-api-twitter
+  template:
+    metadata:
+      labels:
+        app: monitoring-api-twitter
+    spec:
+      hostNetwork: true
+      containers:
+        - name: monitoring-api-twitter
+          image: monitoring-api-twitter-image
+          env:
+            - name: ENV
+              value: dev
+            - name: JAVA_OPTS
+              value: >-
+                -Duser.timezone=America/Sao_Paulo -Dfile.encoding=UTF8 -Xms512m -Xmx512m
+            - name: ENV_SLEUTH_ENABLE
+              value: 'true'
