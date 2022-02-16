@@ -12,15 +12,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class TweetsController(
-    private val twitterApiClient: TwitterApiClient,
     private val tweetService: TweetService
 ) {
-    val logger = KotlinLogging.logger("outbound-logs")
-
-    @GetMapping("/tweet")
-    fun getTweetsByHashTag(): Statuses {
-        return twitterApiClient.getTweetByHashtag("#openbanking")
-    }
+    val logger = KotlinLogging.logger {  }
 
     @GetMapping("/users-with-most-followers")
     fun getUserWithMostFollowers(): List<TweetResponse>{
