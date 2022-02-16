@@ -3,7 +3,7 @@ buildscript {
         java_version = JavaVersion.VERSION_11
         kotlin_version = '1.6.10'
         resilience4j_version = '2.0.2'
-        spring_boot_version = '2.5.9'
+        spring_boot_version = '2.5.1'
         spotless_version = '5.14.2'
         spring_cloud_version = '2020.0.5'
         mockk_version = '1.12.0'
@@ -55,12 +55,11 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'io.github.microutils:kotlin-logging:2.1.21'
-    implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation "io.springfox:springfox-swagger2:$swagger_version"
     implementation "io.springfox:springfox-swagger-ui:$swagger_version"
     implementation "io.springfox:springfox-boot-starter:$swagger_version"
     implementation "org.springframework.cloud:spring-cloud-starter-sleuth:2.2.8.RELEASE"
-    implementation 'net.logstash.logback:logstash-logback-encoder:7.0.1'
+    implementation "net.logstash.logback:logstash-logback-encoder:5.2"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:$spring_boot_version"
 

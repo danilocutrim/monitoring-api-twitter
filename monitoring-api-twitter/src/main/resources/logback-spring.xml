@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false">
-
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-
-    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+<configuration>
+    <appender name="logStash"
+              class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>localhost:5000</destination>
-
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
                 <timestamp>
@@ -20,6 +20,10 @@
                         "severity": "%level",
                         "service": "${appName:-}",
                         "@version": "${project.version}",
+                        "trace": "%X{X-B3-TraceId:-}",
+                        "span": "%X{X-B3-SpanId:-}",
+                        "parent": "%X{X-B3-ParentSpanId:-}",
+                        "exportable": "%X{X-Span-Export:-}",
                         "pid": "${PID:-}",
                         "thread": "%thread",
                         "class": "%logger{40}",
@@ -47,32 +51,8 @@
             </providers>
         </encoder>
     </appender>
-    <!-- Appender tos log tos console -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>
-                %-30(%date{ISO8601} [%thread]) %highlight(%-5level) %boldCyan(%logger{32}) - %X{X-B3-TraceId:-} - %X{X-B3-SpanId:-} - %X{X-B3-ParentSpanId:-} - %X{X-Span-Export:-} - %msg%n
-            </Pattern>
-        </layout>
-    </appender>
-    <springProfile name="dev">
-        <logger name="br.com.alelo" level="DEBUG" additivity="false">
-            <appender-ref ref="STDOUT"/>
-        </logger>
-
-        <!-- DEIXAR TRACE PARA LOGAR VALORES HIBERNATE -->
-        <logger name="org.hibernate.type" level="ERROR" additivity="false">
-            <appender-ref ref="STDOUT"/>
-        </logger>
-
-        <!-- DEIXAR DEBUG PARA LOGAR VALORES HIBERNATE -->
-        <logger name="org.hibernate.SQL" level="ERROR" additivity="false">
-            <appender-ref ref="STDOUT"/>
-        </logger>
-    </springProfile>
-    <springProfile name="!dev">
-        <logger name="br.com.alelo" level="INFO" additivity="false">
-            <appender-ref ref="JSONOUT"/>
-        </logger>
-    </springProfile>
+    <root level="INFO">
+        <appender-ref ref="logStash" />
+        <appender-ref ref="console" />
+    </root>
 </configuration>

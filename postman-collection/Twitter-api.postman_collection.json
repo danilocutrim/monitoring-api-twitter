@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "0aa6b513-43e0-4021-a98a-3901649497ff",
+		"name": "Twitter-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/tweets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9081/twitter-api/tweet",
+					"host": [
+						"localhost"
+					],
+					"port": "9081",
+					"path": [
+						"twitter-api",
+						"tweet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users-with-most-followers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9081/twitter-api/users-with-most-followers",
+					"host": [
+						"localhost"
+					],
+					"port": "9081",
+					"path": [
+						"twitter-api",
+						"users-with-most-followers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/get-count-tweets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9081/twitter-api/get-count-tweets",
+					"host": [
+						"localhost"
+					],
+					"port": "9081",
+					"path": [
+						"twitter-api",
+						"get-count-tweets"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

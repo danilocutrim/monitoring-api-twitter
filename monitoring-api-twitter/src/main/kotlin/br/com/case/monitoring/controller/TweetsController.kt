@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class TweetsController(
     private val tweetService: TweetService
 ) {
-    val logger = KotlinLogging.logger {  }
+    val logger = KotlinLogging.logger("minhapika")
 
     @GetMapping("/users-with-most-followers")
     fun getUserWithMostFollowers(): List<TweetResponse>{

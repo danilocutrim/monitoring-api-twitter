@@ -15,6 +15,9 @@ spring:
     name: monitoring-api-twitter
   sleuth:
     enabled: ${ENV_SLEUTH_ENABLE:true}
+    log:
+      slf4j:
+        enabled: false
   zipkin:
     enabled: false
 logstash:
