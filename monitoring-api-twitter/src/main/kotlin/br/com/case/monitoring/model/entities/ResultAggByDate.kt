@@ -1,10 +1,10 @@
-package br.com.case.monitoring.model.request
+package br.com.case.monitoring.model.entities
 
 import java.time.LocalDateTime
 
-data class Result(
+data class ResultAggByDate(
     val date: LocalDateTime? = null,
-    val total: Long? = null,
+    val count: Long? = null,
     val day: String? = null,
     val hour: String? = null
 )

@@ -1,4 +1,4 @@
-package br.com.case.monitoring.model.request
+package br.com.case.monitoring.model.entities
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

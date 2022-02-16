@@ -25,19 +25,40 @@
 			"response": []
 		},
 		{
-			"name": "/get-count-tweets",
+			"name": "/tweets/date",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:9081/twitter-api/get-count-tweets",
+					"raw": "localhost:9081/twitter-api/tweets/date",
 					"host": [
 						"localhost"
 					],
 					"port": "9081",
 					"path": [
 						"twitter-api",
-						"get-count-tweets"
+						"tweets",
+						"date"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tweets/date",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9081/twitter-api/tweets/lang",
+					"host": [
+						"localhost"
+					],
+					"port": "9081",
+					"path": [
+						"twitter-api",
+						"tweets",
+						"lang"
 					]
 				}
 			},

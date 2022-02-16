@@ -1,9 +1,10 @@
 package br.com.case.monitoring.service
 
 import br.com.case.monitoring.exception.NotFoundException
-import br.com.case.monitoring.model.request.Result
-import br.com.case.monitoring.model.request.TweetResponse
-import br.com.case.monitoring.repository.TweetRepositoryImpl
+import br.com.case.monitoring.model.entities.ResultAggByDate
+import br.com.case.monitoring.model.entities.ResultAggByTagAngLang
+import br.com.case.monitoring.model.entities.TweetResponse
+import br.com.case.monitoring.repository.TweetRepositoryCustom
 import mu.KotlinLogging
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class TweetService(
-    private val tweetRepositoryImpl: TweetRepositoryImpl
+    private val tweetRepositoryCustom: TweetRepositoryCustom
 ) {
     private val logger = KotlinLogging.logger {}
 
@@ -20,7 +21,7 @@ class TweetService(
         val query = Query()
         query.with(Sort.by(Sort.Direction.DESC, "user.followersCount")).with(PageRequest.of(0, pageRequestSize))
         return try {
-            tweetRepositoryImpl.getUsersWithMostFollowers(5)
+            tweetRepositoryCustom.getUsersWithMostFollowers(5)
         } catch (e: NotFoundException) {
             logger.warn { "getUsersWithMostFollowers: tweets not found" }
             throw e
@@ -30,15 +31,26 @@ class TweetService(
         }
     }
 
-    fun getCountPostTags(): List<Result> {
+    fun getCountPostTagsByDate(): List<ResultAggByDate> {
         return try {
-            tweetRepositoryImpl.getCountPostTags()
+            tweetRepositoryCustom.getCountPostTagsAggregateByDate()
         } catch (e: NotFoundException) {
             logger.warn { "getCountPostTags: cannot find tweets" }
             throw e
-
         } catch (e: Exception) {
             logger.error(e) { "getCountPostTags: error while get tweets" }
+            throw e
+        }
+    }
+
+    fun getCountPostTagsByLang(): List<ResultAggByTagAngLang> {
+        return try {
+            tweetRepositoryCustom.getCountPostTagsAggregateByTagAndLang()
+        } catch (e: NotFoundException) {
+            logger.warn { "getCountPostTagsByLang: cannot find tweets" }
+            throw e
+        } catch (e: Exception) {
+            logger.error(e) { "getCountPostTagsByLang: error while get tweets" }
             throw e
         }
     }

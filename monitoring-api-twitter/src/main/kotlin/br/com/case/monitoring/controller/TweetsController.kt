@@ -1,10 +1,8 @@
 package br.com.case.monitoring.controller
 
-import br.com.case.monitoring.client.TwitterApiClient
-import br.com.case.monitoring.exception.NotFoundException
-import br.com.case.monitoring.model.request.Result
-import br.com.case.monitoring.model.request.Statuses
-import br.com.case.monitoring.model.request.TweetResponse
+import br.com.case.monitoring.model.entities.ResultAggByDate
+import br.com.case.monitoring.model.entities.ResultAggByTagAngLang
+import br.com.case.monitoring.model.entities.TweetResponse
 import br.com.case.monitoring.service.TweetService
 import mu.KotlinLogging
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 class TweetsController(
     private val tweetService: TweetService
 ) {
-    val logger = KotlinLogging.logger("minhapika")
+    val logger = KotlinLogging.logger("tweets")
 
     @GetMapping("/users-with-most-followers")
     fun getUserWithMostFollowers(): List<TweetResponse>{
@@ -24,11 +22,19 @@ class TweetsController(
         }
     }
 
-    @GetMapping("/get-count-tweets")
-    fun getCountTweets(): List<Result> {
+    @GetMapping("/tweets/date")
+    fun getCountTweetsByDate(): List<ResultAggByDate> {
         logger.info { "getCountTweets: get count tweets by time" }
-        return tweetService.getCountPostTags().also {
+        return tweetService.getCountPostTagsByDate().also {
             logger.info { "getCountTweets: get count tweets by time with success" }
+        }
+    }
+
+    @GetMapping("/tweets/lang")
+    fun getCountTweetsByLang(): List<ResultAggByTagAngLang> {
+        logger.info { "getCountTweetsByLang: get count tweets by lang" }
+        return tweetService.getCountPostTagsByLang().also {
+            logger.info { "getCountTweetsByLang: get count tweets by lang with success" }
         }
     }
 }

@@ -1,4 +1,4 @@
-package br.com.case.monitoring.model.request
+package br.com.case.monitoring.model.entities
 
 data class Statuses(
     val statuses: List<TweetResponse>

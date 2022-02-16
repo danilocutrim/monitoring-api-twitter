@@ -1,6 +1,6 @@
 package br.com.case.monitoring.client
 
-import br.com.case.monitoring.model.request.Statuses
+import br.com.case.monitoring.model.entities.Statuses
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity

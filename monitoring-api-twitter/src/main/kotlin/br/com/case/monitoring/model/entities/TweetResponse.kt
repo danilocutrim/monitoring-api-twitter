@@ -1,16 +1,11 @@
-package br.com.case.monitoring.model.request
+package br.com.case.monitoring.model.entities
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
-import org.springframework.format.annotation.DateTimeFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
-import java.time.temporal.TemporalAccessor
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document("tweets")
