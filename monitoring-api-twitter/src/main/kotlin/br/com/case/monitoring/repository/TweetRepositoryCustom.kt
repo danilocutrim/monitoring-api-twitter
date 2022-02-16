@@ -23,8 +23,10 @@ class TweetRepositoryCustom(private val mongoTemplate: MongoTemplate) {
         val sortBy = Sort.by(Sort.Direction.DESC, "user.followersCount")
         val pageRequest = PageRequest.of(0, usersQtd)
         query.with(sortBy).with(pageRequest)
-        return mongoTemplate.find(query, TweetResponse::class.java)
+        val result =  mongoTemplate.find(query, TweetResponse::class.java)
             ?: throw NotFoundException(TWEET_NOT_FOUND)
+        if (result.isNotEmpty()) return result
+        else throw NotFoundException(TWEET_NOT_FOUND)
     }
 
     fun getCountPostTagsAggregateByDate(): List<ResultAggByDate> {
@@ -40,8 +42,10 @@ class TweetRepositoryCustom(private val mongoTemplate: MongoTemplate) {
             projection,
             sort
         )
-        return mongoTemplate.aggregate(agg, TweetResponse::class.java, ResultAggByDate::class.java).mappedResults
+        val result =  mongoTemplate.aggregate(agg, TweetResponse::class.java, ResultAggByDate::class.java).mappedResults
             ?: throw NotFoundException(TWEET_NOT_FOUND)
+        if (result.isNotEmpty()) return result
+        else throw NotFoundException(TWEET_NOT_FOUND)
     }
 
     fun getCountPostTagsAggregateByTagAndLang(): List<ResultAggByTagAngLang> {
@@ -59,8 +63,10 @@ class TweetRepositoryCustom(private val mongoTemplate: MongoTemplate) {
             projection,
             sort
         )
-        return mongoTemplate.aggregate(agg, TweetResponse::class.java, ResultAggByTagAngLang::class.java).mappedResults
+        val result = mongoTemplate.aggregate(agg, TweetResponse::class.java, ResultAggByTagAngLang::class.java).mappedResults
             ?: throw NotFoundException(TWEET_NOT_FOUND)
+        if (result.isNotEmpty()) return result
+        else throw NotFoundException(TWEET_NOT_FOUND)
     }
 
 }

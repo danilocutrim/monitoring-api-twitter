@@ -35,10 +35,9 @@ management:
         enabled: true
   endpoint:
     metrics:
-      enabled: false
+      enabled: true
     prometheus:
       enabled: true
-
 http:
   timeout: ${ENV_HTTP_TIMEOUT:10}
   debug: ${ENV_HTTP_DEBUG:true}
