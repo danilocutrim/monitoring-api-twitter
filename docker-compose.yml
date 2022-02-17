@@ -1,0 +1,111 @@
+version: '3'
+services:
+  prometheus:
+    network_mode: "host"
+    image: danilocutrim/prometheus-monitoring
+    container_name: prometheus-monitoring-twitter-api
+    volumes:
+      - ./prometheus-grafana/env/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - monitoring-api-twitter
+
+  grafana:
+    network_mode: "host"
+    image: danilocutrim/grafana-monitoring
+    container_name: grafana-monitoring-twitter-api
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./prometheus-grafana/env/grafana.env
+
+  monitoring-api-twitter:
+    network_mode: "host"
+    image: danilocutrim/monitoring-twitter-api
+    container_name: monitoring-twitter-api
+    ports:
+      - "9081:9081"
+    depends_on:
+      - mongo
+      - kibana
+
+  elasticsearch:
+    image: danilocutrim/elastic-monitoring
+    volumes:
+      - elasticsearch:/usr/share/elastic-monitoring/data
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      # Note: currently there doesn't seem to be a way to change the default user for Elasticsearch
+      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks
+      # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+      discovery.type: single-node
+      # X-Pack security needs to be enabled for Elasticsearch to actually authenticate requests
+      xpack.security.enabled: "true"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    healthcheck:
+      test: "wget -q -O - http://$ELASTIC_USER:$ELASTIC_PASSWORD@localhost:9200/_cat/health"
+      interval: 1s
+      timeout: 30s
+      retries: 300
+    networks:
+      - internal
+    restart: unless-stopped
+  # https://www.elastic.co/guide/en/logstash/current/docker-config.html
+
+  logstash:
+    image: danilocutrim/logstash-monitoring
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_USER: $ELASTIC_USER
+      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
+      XPACK_MONITORING_ELASTICSEARCH_USERNAME: $ELASTIC_USER
+      XPACK_MONITORING_ELASTICSEARCH_PASSWORD: $ELASTIC_PASSWORD
+      XPACK_MONITORING_ELASTICSEARCH_HOSTS: "elasticsearch:9200"
+      XPACK_MONITORING_ENABLED: "true"
+    volumes:
+      - ./logstash-kibana/logstash/pipeline:/usr/share/logstash/pipeline:ro
+    networks:
+      - internal
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+
+  # https://www.elastic.co/guide/en/kibana/current/docker.html
+
+  kibana:
+    image: danilocutrim/kibana-monitoring
+    environment:
+      ELASTICSEARCH_USERNAME: $ELASTIC_USER
+      ELASTICSEARCH_PASSWORD: $ELASTIC_PASSWORD
+      # Because Elasticsearch is running in a containerized environment
+      # (setting this to false will result in CPU stats not being correct in the Monitoring UI):
+      XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED: "true"
+    ports:
+      - "5601:5601"
+    networks:
+      - internal
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+      - logstash
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    network_mode: "host"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+
+networks:
+  internal:
+
+volumes:
+  elasticsearch:
