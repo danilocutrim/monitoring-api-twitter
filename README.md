@@ -50,12 +50,11 @@ docker-compose up
 #### em sequida navegue até a aba "Dashboards" e selecione o Dashboard: API-dash e clique em create dashboard
 ![g](Captura%20de%20tela%20de%202022-02-17%2001-34-20.png)
 
-### No painel esta disponivel um dash para monitora o numero de requisções para cada endpoint
-### e também o numero de requisções com erro e o uso de cpu da aplicação
 ![h](Captura%20de%20tela%20de%202022-02-17%2001-34-38.png)
 
 ### Prometheus + grafana
-
+### No painel esta disponivel um dash para monitorar o numero de requisções para cada endpoint
+### e também o numero de requisções com erro e o uso de cpu da aplicação
 * Para acessar o prometheus ir para: http://localhost:9090
 * Para acessa o grafana ir para: http://localhost:3000
 #### No primeiro acesso ao grafana sera necessario definir um nova senha, ou cliar em skip para manter sem senha
