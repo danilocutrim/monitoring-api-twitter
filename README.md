@@ -34,33 +34,33 @@ docker-compose up
 * senha: changeme
 
 #### Ao logar, em create index patter colocar : logstash*
-![b](images/Captura de tela de 2022-02-17 01-31-53.png)
+![b](Captura%20de%20tela%20de%202022-02-17%2001-31-53.png)
 
 #### Em time field name colocar: @timestamp
-![c](images/Captura de tela de 2022-02-17 01-32-06.png)
+![c](Captura%20de%20tela%20de%202022-02-17%2001-32-06.png)
 
 ### Em discovery é possivel acompanhar os logs da aplicação
-![z](images/Captura de tela de 2022-02-17 02-00-44.png)
-#### Depois ir na opção Saved objects (disponivel em managemente -> kibana -> saved objects) clicar em import
-![d](images/Captura de tela de 2022-02-17 01-32-50.png)
+![z](Captura%20de%20tela%20de%202022-02-17%2002-00-44.png)
+#### Depois ir na opção Saved objects (disponivel em managemente - kibana - saved objects) clicar em import
+![d](Captura%20de%20tela%20de%202022-02-17%2001-32-50.png)
 #### selecionar o arquivo "export.ndjson " disponivel na pasta logstash-kibana "
-![e](images/Captura de tela de 2022-02-17 01-33-06.png)
+![e](Captura%20de%20tela%20de%202022-02-17%2001-33-06.png)
 ####clique em importar
-![f](images/Captura de tela de 2022-02-17 01-33-48.png)
+![f](Captura%20de%20tela%20de%202022-02-17%2001-33-48.png)
 #### em sequida navegue até a aba "Dashboards" e selecione o Dashboard: API-dash e clique em create dashboard
-![g](images/Captura de tela de 2022-02-17 01-34-20.png)
+![g](Captura%20de%20tela%20de%202022-02-17%2001-34-20.png)
 
 ### No painel esta disponivel um dash para monitora o numero de requisções para cada endpoint
 ### e também o numero de requisções com erro e o uso de cpu da aplicação
-![h](images/Captura de tela de 2022-02-17 01-34-38.png)
+![h](Captura%20de%20tela%20de%202022-02-17%2001-34-38.png)
 
 ### Prometheus + grafana
 
 * Para acessar o prometheus ir para: http://localhost:9090
 * Para acessa o grafana ir para: http://localhost:3000
 #### No primeiro acesso ao grafana sera necessario definir um nova senha, ou cliar em skip para manter sem senha
-![](images/Captura de tela de 2022-02-17 01-35-46.png)
+![ji](Captura%20de%20tela%20de%202022-02-17%2001-35-46.png)
 ### Para acessar o dash da API selectionar : tweeter-api-dash
-![](images/Captura de tela de 2022-02-17 01-36-11.png)
-![](images/Captura de tela de 2022-02-17 01-38-24.png)
+![jii](Captura%20de%20tela%20de%202022-02-17%2001-36-11.png)
+![jii](Captura%20de%20tela%20de%202022-02-17%2001-38-24.png)
 
